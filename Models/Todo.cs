@@ -13,6 +13,10 @@ namespace todo_universe.Models
         [MaxLength(50)]
         public string Title { get; set; } = String.Empty;
         public bool IsComplete { get; set; } = false;
+        public int? CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
 
         [ForeignKey("UserId")]
         public User? User { get; set; }
