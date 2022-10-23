@@ -13,6 +13,7 @@
           "Microsoft.EntityFrameworkCore": "6.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.9",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.9",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.9",
           "Swashbuckle.AspNetCore": "6.2.3"
         },

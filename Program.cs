@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
 using todo_universe.Manager;
+using todo_universe.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddAuthentication(x =>
 });
 
 builder.Services.AddSingleton<JwtAuthenticationManager>();
+//builder.Services.AddSingleton<UserHelpers>();
 
 
 
@@ -65,7 +67,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "APIApplication v1"));
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

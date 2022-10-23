@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Authentication;
 using todo_universe.Data;
 using todo_universe.Models;
+using todo_universe.Manager;
 
 namespace todo_universe.Controllers
 {   
@@ -11,19 +13,36 @@ namespace todo_universe.Controllers
     [ApiController]
     public class TodosController : ControllerBase
     {
-        //private readonly JwtAuthManager _jwtAuthManager;
         private readonly AppDbContext _dbContext;
+        private readonly ILogger<TodosController> _logger;
+        private readonly JwtAuthenticationManager _jwtAuthManager;
 
-        public TodosController(AppDbContext dbContext)
+        //private IHttpContextAccessor _httpContextAccessor;
+
+        public TodosController(ILogger<TodosController> logger, AppDbContext dbContext, JwtAuthenticationManager jwtAuthenticationManager)
         {
+            _jwtAuthManager = jwtAuthenticationManager;
             _dbContext = dbContext;
+            _logger = logger;
+            //_httpContextAccessor = httpContextAccessor;
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult Index(string? title = null, int? id = null,bool? isComplete = null)
         {
-            var todos = _dbContext.Todos.AsQueryable();
+
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+            var userName = _jwtAuthManager.GetUserName(token);
+            if(userName ==null)
+            {
+                return Unauthorized();
+            }
+            var userId = GetUserId(userName);
+
+            
+            _logger.LogInformation("##############=> getting all todos");
+            var todos = _dbContext.Todos.Where(t => t.UserId == userId).AsQueryable();
 
             if (!String.IsNullOrEmpty(title))
             {
@@ -35,25 +54,27 @@ namespace todo_universe.Controllers
                 todos = todos.Where(todo => todo.Id ==id);
             }
 
-            if(isComplete != null)
+            if (isComplete != null)
             {
                 todos = todos.Where(todo => todo.IsComplete == isComplete);
             }
 
-
-            var token = Request.Headers["authorization"].FirstOrDefault()?.Split(" ").Last();
-            //if (token != null && _jwtAuthManager.ValidateToken(token))
-            //{
-                return Ok(todos);
-            //}
-            //return Unauthorized();
-
+            return Ok(todos);
         }
 
         [Authorize]
         [HttpPost]
         public IActionResult Add(Todo todo)
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+            var userName = _jwtAuthManager.GetUserName(token);
+            if (userName == null)
+            {
+                return Unauthorized();
+            }
+            var userId = GetUserId(userName);
+            
+            todo.UserId = userId;
             _dbContext.Todos.Add(todo);
             _dbContext.SaveChanges();
 
@@ -64,10 +85,22 @@ namespace todo_universe.Controllers
         [HttpDelete]
         public IActionResult Delete(int id)
         {
+
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+            var userName = _jwtAuthManager.GetUserName(token);
+            if (userName == null)
+            {
+                return Unauthorized();
+            }
+            var userId = GetUserId(userName);
+
             var todo = _dbContext.Todos.Find(id);
 
             if(todo == null) 
                 return NotFound();
+
+            if (todo.UserId != userId)
+                return Unauthorized();
 
             _dbContext.Todos.Remove(todo);
             _dbContext.SaveChanges();
@@ -79,10 +112,27 @@ namespace todo_universe.Controllers
         [HttpPut]
         public async Task<IActionResult> Edit(int id, Todo editedTodo)
         {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
+            var userName = _jwtAuthManager.GetUserName(token);
+            if (userName == null)
+            {
+                return Unauthorized();
+            }
+            var userId = GetUserId(userName);
+
             var todo = _dbContext.Todos.Find(id);
 
             if (todo == null)
+            {
+                _logger.LogWarning("##############=> todo is not found");
                 return NotFound();
+            }
+
+            if (todo.UserId != userId)
+            {
+                _logger.LogWarning("##############=> todo is not found");
+                return Unauthorized();
+            }
 
             todo.Title = editedTodo.Title;
             todo.IsComplete = editedTodo.IsComplete;
@@ -91,20 +141,12 @@ namespace todo_universe.Controllers
             await _dbContext.SaveChangesAsync();
 
             return Ok(todo);
+        }
 
-            //var todo = _dbContext.Todos.Find(id);
-
-            //if (todo == null)
-            //    return NotFound();
-
-            ////todo = editedTodo;
-
-
-            //_dbContext.Entry(todo).CurrentValues.SetValues(editedTodo);
-
-            //await _dbContext.SaveChangesAsync();
-
-            //return Ok(todo);
+        public int GetUserId(string userName)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.UserName == userName);
+            return user.Id;
         }
     }
 }

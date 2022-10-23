@@ -43,5 +43,23 @@ namespace todo_universe.Manager
 
             return tokenHandler.WriteToken(token);
         }
+
+        public string GetUserName(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Token"]);
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            }, out SecurityToken validatedToken);
+
+            var jwtToken = (JwtSecurityToken)validatedToken;
+            var userName = jwtToken.Claims.First(x => x.Type == "name").Value;
+
+            return userName;
+        }
     }
 }
