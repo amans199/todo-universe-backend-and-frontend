@@ -26,7 +26,7 @@ namespace todo_universe.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Index(string? title = null, int? id = null,bool? isComplete = null, int? categoryId = null)
+        public IActionResult Index(string? title = null, int? id = null,bool? isComplete = null, int? categoryId = null,int orderByTitle = 0, int orderByCreatedAt = 0, int orderByUpdatedAt = 0, int orderByRemindAt = 0)
         {
 
             var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
@@ -66,20 +66,56 @@ namespace todo_universe.Controllers
                 todos = todos.Where(todo => todo.CategoryId == categoryId);
             }
 
-            var todosWithCategories = todos.Select(todo => new
+            if (orderByTitle == 1)
+            {
+                todos = todos.OrderBy(todo => todo.Title);
+            }
+            else if (orderByTitle == 2)
+            {
+                todos = todos.OrderByDescending(todo => todo.Title);
+            }
+
+            if (orderByCreatedAt == 1)
+            {
+                todos = todos.OrderBy(todo => todo.CreatedAt);
+            }
+            else if (orderByCreatedAt == 2)
+            {
+                todos = todos.OrderByDescending(todo => todo.CreatedAt);
+            }
+
+            if (orderByUpdatedAt == 1)
+            {
+                todos = todos.OrderBy(todo => todo.UpdatedAt);
+            }
+            else if (orderByUpdatedAt == 2)
+            {
+                todos = todos.OrderByDescending(todo => todo.UpdatedAt);
+            }
+
+            if (orderByRemindAt == 1)
+            {
+                todos = todos.OrderBy(todo => todo.RemindAt);
+            }
+            else if (orderByRemindAt == 2)
+            {
+                todos = todos.OrderByDescending(todo => todo.RemindAt);
+            }
+
+
+            var todosWithCategory = todos.Select(todo => new
             {
                 todo.Id,
                 todo.Title,
+                todo.IsComplete,
                 todo.CreatedAt,
                 todo.UpdatedAt,
-                //todo.Description,
-                todo.IsComplete,
                 todo.RemindAt,
                 todo.CategoryId,
                 Category = categories.FirstOrDefault(c => c.Id == todo.CategoryId)
             });
 
-            return Ok(todosWithCategories);
+            return Ok(todosWithCategory);
         }
 
         [Authorize]
