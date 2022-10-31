@@ -26,7 +26,7 @@ namespace todo_universe.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult Index(string? title = null, int? id = null,bool? isComplete = null)
+        public IActionResult Index(string? title = null, int? id = null,bool? isComplete = null, int? categoryId = null)
         {
 
             var token = HttpContext.Request.Headers["Authorization"].ToString().Split(" ")[1];
@@ -45,7 +45,7 @@ namespace todo_universe.Controllers
 
             _logger.LogInformation("##############=> getting all todos");
             var todos = _dbContext.Todos.Where(t => t.UserId == userId).AsQueryable();
-
+            var categories = _dbContext.Categories.Where(t => t.UserId == userId).AsQueryable();
             if (!String.IsNullOrEmpty(title))
             {
                 todos = todos.Where(todo => todo.Title.Contains(title));
@@ -61,7 +61,23 @@ namespace todo_universe.Controllers
                 todos = todos.Where(todo => todo.IsComplete == isComplete);
             }
 
-            return Ok(todos);
+            if (categoryId != null)
+            {
+                todos = todos.Where(todo => todo.CategoryId == categoryId);
+            }
+
+            var todosWithCategories = todos.Select(todo => new
+            {
+                todo.Id,
+                todo.Title,
+                //todo.Description,
+                todo.IsComplete,
+                //todo.DueDate,
+                todo.CategoryId,
+                Category = categories.FirstOrDefault(c => c.Id == todo.CategoryId)
+            });
+
+            return Ok(todosWithCategories);
         }
 
         [Authorize]
@@ -153,6 +169,7 @@ namespace todo_universe.Controllers
 
             todo.Title = editedTodo.Title;
             todo.IsComplete = editedTodo.IsComplete;
+            todo.CategoryId = editedTodo.CategoryId;
 
             _dbContext.Todos.Update(todo);
             await _dbContext.SaveChangesAsync();
