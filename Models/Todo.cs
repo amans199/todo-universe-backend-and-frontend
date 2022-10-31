@@ -13,6 +13,9 @@ namespace todo_universe.Models
         [MaxLength(50)]
         public string Title { get; set; } = String.Empty;
         public bool IsComplete { get; set; } = false;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+        public DateTime RemindAt { get; set; } = DateTime.Now;
         public int? CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]

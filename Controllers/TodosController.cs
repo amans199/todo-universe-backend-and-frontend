@@ -70,9 +70,11 @@ namespace todo_universe.Controllers
             {
                 todo.Id,
                 todo.Title,
+                todo.CreatedAt,
+                todo.UpdatedAt,
                 //todo.Description,
                 todo.IsComplete,
-                //todo.DueDate,
+                todo.RemindAt,
                 todo.CategoryId,
                 Category = categories.FirstOrDefault(c => c.Id == todo.CategoryId)
             });
@@ -98,6 +100,7 @@ namespace todo_universe.Controllers
             }
 
             todo.UserId = userId;
+            todo.CreatedAt = DateTime.Now;
             _dbContext.Todos.Add(todo);
             _dbContext.SaveChanges();
 
@@ -170,6 +173,8 @@ namespace todo_universe.Controllers
             todo.Title = editedTodo.Title;
             todo.IsComplete = editedTodo.IsComplete;
             todo.CategoryId = editedTodo.CategoryId;
+            todo.RemindAt = editedTodo.RemindAt;
+            todo.UpdatedAt = DateTime.Now;
 
             _dbContext.Todos.Update(todo);
             await _dbContext.SaveChangesAsync();
