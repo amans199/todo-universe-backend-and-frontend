@@ -20,7 +20,7 @@ namespace todo_universe.Manager
             _configuration = configuration;
         }
 
-        public string? Authenticate(string username, string password)
+        public string? Authenticate(string username)
         {
             
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();

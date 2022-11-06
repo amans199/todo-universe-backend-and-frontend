@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Models;
 using todo_universe.Manager;
 using todo_universe.Helpers;
+using todo_universe.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ builder.Services.AddAuthentication(x =>
 });
 
 builder.Services.AddSingleton<JwtAuthenticationManager>();
+//register helper services
+builder.Services.AddScoped<AccountService>();
 //builder.Services.AddSingleton<UserHelpers>();
 
 

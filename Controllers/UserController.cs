@@ -5,6 +5,7 @@ using todo_universe.Models;
 using todo_universe.Data;
 using Microsoft.VisualStudio.Web.CodeGeneration.CommandLine;
 using todo_universe.Helpers;
+using todo_universe.Services;
 
 namespace todo_universe.Controller
 {
@@ -15,11 +16,13 @@ namespace todo_universe.Controller
     {
         private readonly JwtAuthenticationManager _jwtAuthManager;
         public readonly AppDbContext _dbContext;
+        public readonly AccountService _accountService;
 
-        public UserController(JwtAuthenticationManager jwtAuthenticationManager, AppDbContext dbContext)
+        public UserController(JwtAuthenticationManager jwtAuthenticationManager, AppDbContext dbContext, AccountService accountService)
         {
             _jwtAuthManager = jwtAuthenticationManager;
             _dbContext = dbContext;
+            _accountService = accountService;
         }
 
         [HttpPost]
@@ -31,11 +34,11 @@ namespace todo_universe.Controller
             if (userData == null)
                 return Unauthorized();
 
-               //Todo : secure password
-            if (userData.Password != user.Password)
+            string hashedPassword = _accountService.HashPassword(user.Password, userData.Salt);
+            if (userData.Password != hashedPassword)
                 return Unauthorized();
 
-            var token = _jwtAuthManager.Authenticate(user.UserName, user.Password);
+            var token = _jwtAuthManager.Authenticate(user.UserName);
 
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();
@@ -54,10 +57,13 @@ namespace todo_universe.Controller
             if (userData != null)
                 return BadRequest();
 
-            _dbContext.Users.Add(user);
+
+            string generatedSalt = _accountService.GenerateSalt();
+            string hashedPassword = _accountService.HashPassword(user.Password, generatedSalt);
+            _dbContext.Users.Add(new User { UserName = user.UserName, Password = hashedPassword, Salt = generatedSalt });
             _dbContext.SaveChanges();
 
-            var token = _jwtAuthManager.Authenticate(user.UserName, user.Password);
+            var token = _jwtAuthManager.Authenticate(user.UserName);
 
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();
