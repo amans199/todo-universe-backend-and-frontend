@@ -20,7 +20,7 @@ namespace todo_universe.Manager
             _configuration = configuration;
         }
 
-        public string? Authenticate(string username)
+        public string? Authenticate(User user)
         {
             
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -30,7 +30,8 @@ namespace todo_universe.Manager
                 // add userId and username to the claims 
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 }),
 
                 // Duration of the Token

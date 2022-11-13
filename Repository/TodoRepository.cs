@@ -50,7 +50,8 @@ public class TodoRepository : ITodoRepository
         return editedTodo;
     }
 
-    public async Task<Todo> GetTodoAsync(int id)
+    //TODO : User can get any todo by id even if not user .. need to fix
+    public async Task<Todo> GetTodoByIdAsync(int id)
     {
         return await _dbContext.Todos.FindAsync(id);
     }

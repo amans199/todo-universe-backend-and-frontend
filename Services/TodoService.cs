@@ -16,9 +16,9 @@ public class TodoService
     ///     Get all todos
     /// </summary>
     /// //System.InvalidOperationException: Could not create an instance of type 'todo_universe.Services.ITodoQueryParams'. Model bound complex types must not be abstract or value types and must have a parameterless constructor. Record types must have a single primary constructor. Alternatively, give the 'queryParams' parameter a non-null default value.
-    public async Task<IEnumerable<Todo>> GetAllTodosAsync(string? title, int? id, bool? isComplete, int? categoryId, int? orderByTitle, int? orderByCreatedAt, int? orderByUpdatedAt, int? orderByRemindAt)
+    public async Task<IEnumerable<Todo>> GetAllTodosAsync(int userId,string? title, int? id, bool? isComplete, int? categoryId, int? orderByTitle, int? orderByCreatedAt, int? orderByUpdatedAt, int? orderByRemindAt)
     {
-        var todos = _dbContext.Todos.AsQueryable();
+        var todos = _dbContext.Todos.Where(t => t.UserId == userId).AsQueryable();
         if (title != null)
         {
             todos = todos.Where(t => t.Title.Contains(title));

@@ -38,7 +38,7 @@ namespace todo_universe.Controller
             if (userData.Password != hashedPassword)
                 return Unauthorized();
 
-            var token = _jwtAuthManager.Authenticate(user.UserName);
+            var token = _jwtAuthManager.Authenticate(userData);
 
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();
@@ -50,7 +50,7 @@ namespace todo_universe.Controller
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] User user)
         {
             var userData = _dbContext.Users.FirstOrDefault(u => u.UserName == user.UserName);
 
@@ -63,7 +63,11 @@ namespace todo_universe.Controller
             _dbContext.Users.Add(new User { UserName = user.UserName, Password = hashedPassword, Salt = generatedSalt });
             _dbContext.SaveChanges();
 
-            var token = _jwtAuthManager.Authenticate(user.UserName);
+            //Authenticate user after registeration to create token 
+            // pass the userData object with the id from db
+            var userDataAfterRegisteration = _dbContext.Users.FirstOrDefault(u => u.UserName == user.UserName);
+
+            var token = _jwtAuthManager.Authenticate(userDataAfterRegisteration);
 
             if (string.IsNullOrEmpty(token))
                 return Unauthorized();

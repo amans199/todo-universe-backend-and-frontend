@@ -5,6 +5,8 @@ using System.Security.Principal;
 using System.Linq;
 using todo_universe.Models;
 using TodoUniverse.Library;
+using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace todo_universe.ActionFilters;
 
@@ -16,6 +18,12 @@ public class ValidationFilterAttribute :IActionFilter
         //get username from claims 
         var userName = context.HttpContext.User.Identity.Name;
 
+        var userId = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (userId == null)
+        {
+            throw new AuthenticationException("User not found");
+        }
 
         if (userName == null)
         {
@@ -23,13 +31,13 @@ public class ValidationFilterAttribute :IActionFilter
             return;
         }
 
-        var param = context.ActionArguments.SingleOrDefault(x => x.Value is ITodo);
+        //var param = context.ActionArguments.SingleOrDefault(x => x.Value is ITodo);
             
-        if (param.Value == null)
-        {
-            context.Result = new BadRequestObjectResult("Object is null");
-            return;
-        }
+        //if (param.Value == null)
+        //{
+        //    context.Result = new BadRequestObjectResult("Object is null");
+        //    return;
+        //}
 
         if (!context.ModelState.IsValid)
         {
