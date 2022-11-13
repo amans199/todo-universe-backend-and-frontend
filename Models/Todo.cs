@@ -15,7 +15,7 @@ namespace todo_universe.Models
         public bool IsComplete { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public DateTime RemindAt { get; set; } = DateTime.Now;
+        public DateTime? RemindAt { get; set; } = null;
         public int? CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]

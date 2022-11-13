@@ -13,13 +13,16 @@ using todo_universe.Manager;
 using todo_universe.Helpers;
 using todo_universe.Services;
 using todo_universe.Repository;
+using todo_universe.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<ITodo, Todo>();
 builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-
+builder.Services.AddScoped<TodoService>();
+builder.Services.AddScoped<ValidationFilterAttribute>();
+builder.Services.AddScoped<UserIdActionFilter>();
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

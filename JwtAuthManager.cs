@@ -27,10 +27,12 @@ namespace todo_universe.Manager
             var tokenKey = Encoding.ASCII.GetBytes(_configuration["Jwt:Token"]);
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor()
             {
+                // add userId and username to the claims 
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, username),
                 }),
+
                 // Duration of the Token
                 // Now the the Duration to 1 Hour
                 Expires = DateTime.UtcNow.AddHours(1),
