@@ -12,11 +12,13 @@ using Microsoft.OpenApi.Models;
 using todo_universe.Manager;
 using todo_universe.Helpers;
 using todo_universe.Services;
+using todo_universe.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<ITodo, Todo>();
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 builder.Services.AddAuthentication(x =>
 {

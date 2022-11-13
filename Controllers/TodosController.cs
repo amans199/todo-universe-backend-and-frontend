@@ -6,6 +6,7 @@ using System.Security.Authentication;
 using todo_universe.Data;
 using todo_universe.Models;
 using todo_universe.Manager;
+using todo_universe.Repository;
 
 namespace todo_universe.Controllers
 {   
@@ -16,9 +17,11 @@ namespace todo_universe.Controllers
         private readonly AppDbContext _dbContext;
         private readonly ILogger<TodosController> _logger;
         private readonly JwtAuthenticationManager _jwtAuthManager;
+        private readonly ITodoRepository _todoRepository;
 
-        public TodosController(ILogger<TodosController> logger, AppDbContext dbContext, JwtAuthenticationManager jwtAuthenticationManager)
+        public TodosController(ILogger<TodosController> logger, AppDbContext dbContext, JwtAuthenticationManager jwtAuthenticationManager, ITodoRepository todoRepository)
         {
+            _todoRepository = todoRepository;
             _jwtAuthManager = jwtAuthenticationManager;
             _dbContext = dbContext;
             _logger = logger;
@@ -44,6 +47,7 @@ namespace todo_universe.Controllers
 
 
             _logger.LogInformation("##############=> getting all todos");
+
             var todos = _dbContext.Todos.Where(t => t.UserId == userId).AsQueryable();
             var categories = _dbContext.Categories.Where(t => t.UserId == userId).AsQueryable();
             if (!String.IsNullOrEmpty(title))
@@ -137,8 +141,8 @@ namespace todo_universe.Controllers
 
             todo.UserId = userId;
             todo.CreatedAt = DateTime.Now;
-            _dbContext.Todos.Add(todo);
-            _dbContext.SaveChanges();
+
+            _todoRepository.AddTodoAsync(todo);
 
             return Ok(todo);
         }
@@ -161,16 +165,7 @@ namespace todo_universe.Controllers
                 return Unauthorized();
             }
 
-            var todo = _dbContext.Todos.Find(id);
-
-            if(todo == null) 
-                return NotFound();
-
-            if (todo.UserId != userId)
-                return Unauthorized();
-
-            _dbContext.Todos.Remove(todo);
-            _dbContext.SaveChanges();
+            _todoRepository.DeleteTodoAsync(id);
 
             return Ok("todo has been deleted successfully");
         }
@@ -206,15 +201,17 @@ namespace todo_universe.Controllers
                 return Unauthorized();
             }
 
-            todo.Title = editedTodo.Title;
-            todo.IsComplete = editedTodo.IsComplete;
-            todo.CategoryId = editedTodo.CategoryId;
-            todo.RemindAt = editedTodo.RemindAt;
-            todo.UpdatedAt = DateTime.Now;
+            //todo.Title = editedTodo.Title;
+            //todo.IsComplete = editedTodo.IsComplete;
+            //todo.CategoryId = editedTodo.CategoryId;
+            //todo.RemindAt = editedTodo.RemindAt;
+            editedTodo.UpdatedAt = DateTime.Now;
 
-            _dbContext.Todos.Update(todo);
-            await _dbContext.SaveChangesAsync();
+            //_dbContext.Todos.Update(todo);
+            //await _dbContext.SaveChangesAsync();
 
+            await _todoRepository.EditTodoAsync(id, editedTodo);
+            
             return Ok(todo);
         }
     }

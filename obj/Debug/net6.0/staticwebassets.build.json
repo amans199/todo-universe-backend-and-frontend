@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "Mh2dCVnvHkGgk2du44SnaQS+6opfluSu0A40YnqEpds=",
-  "Source": "todo-universe",
-  "BasePath": "_content/todo-universe",
+  "Hash": "wj3SieSXTvtWHfyDHxEsoUTn4ufApuoeERgwi0zM+b4=",
+  "Source": "TodoUniverse.Web",
+  "BasePath": "_content/TodoUniverse.Web",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
