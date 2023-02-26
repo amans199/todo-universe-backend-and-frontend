@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "wj3SieSXTvtWHfyDHxEsoUTn4ufApuoeERgwi0zM+b4=",
+  "Hash": "9XdEBV7WiHGqkyglrOFuSeqP3i1Joenu9X+w+uon1vk=",
   "Source": "TodoUniverse.Web",
   "BasePath": "_content/TodoUniverse.Web",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "TodoUniverse.Web\\wwwroot",
+      "Source": "TodoUniverse.Web",
+      "ContentRoot": "C:\\study-projects\\2023\\todo-universe-app\\todo-universe\\wwwroot\\",
+      "BasePath": "_content/TodoUniverse.Web",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

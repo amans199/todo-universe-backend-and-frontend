@@ -633,3 +633,4 @@ C:\study-projects\2023\todo-universe-app\todo-universe\obj\Debug\net6.0\refint\T
 C:\study-projects\2023\todo-universe-app\todo-universe\obj\Debug\net6.0\TodoUniverse.Web.pdb
 C:\study-projects\2023\todo-universe-app\todo-universe\obj\Debug\net6.0\TodoUniverse.Web.genruntimeconfig.cache
 C:\study-projects\2023\todo-universe-app\todo-universe\obj\Debug\net6.0\ref\TodoUniverse.Web.dll
+C:\study-projects\2023\todo-universe-app\todo-universe\bin\Debug\net6.0\TodoUniverse.Web.staticwebassets.runtime.json
