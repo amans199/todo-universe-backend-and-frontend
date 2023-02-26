@@ -9,7 +9,6 @@ using todo_universe.Manager;
 using todo_universe.Repository;
 using todo_universe.ActionFilters;
 using System.Security.Claims;
-using TodoUniverse.Library;
 using todo_universe.Services;
 
 namespace todo_universe.Controllers;

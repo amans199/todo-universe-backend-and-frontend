@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TodoUniverse.Web.props" />
+</Project>

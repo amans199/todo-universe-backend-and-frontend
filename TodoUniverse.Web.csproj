@@ -23,9 +23,5 @@
 	<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\TodoUniverse.Library\TodoUniverse.Library.csproj" />
-    <ProjectReference Include="..\TodoUniverse.Tests\TodoUniverse.Tests.csproj" />
-  </ItemGroup>
 
 </Project>
