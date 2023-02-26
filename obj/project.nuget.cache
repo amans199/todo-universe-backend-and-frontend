@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "haOkOW+vBhhjwhlae0pOU+2jEkngs2oviZJfGvy4BUBpz3BAOd/F8l+vPz6aXjy89bB522VRRUOwjlgOYptm3w==",
+  "dgSpecHash": "paNqfRRBmZdyuzucM7blAANKxH/y1tL4sWqx2oNWIU59rGCOnWmL/tz1dAOIwY08fP+FGFcUjKJL9MbeOfD91Q==",
   "success": true,
-  "projectFilePath": "C:\\study-projects\\2022\\practice\\todo-universe\\TodoUniverse.Web.csproj",
+  "projectFilePath": "C:\\study-projects\\2023\\todo-universe-app\\todo-universe\\TodoUniverse.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
@@ -12,6 +12,7 @@
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.10\\microsoft.aspnetcore.authorization.6.0.10.nupkg.sha512",
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.aspnetcore.metadata\\6.0.10\\microsoft.aspnetcore.metadata.6.0.10.nupkg.sha512",
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
+    "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.aspnetcore.spaservices.extensions\\6.0.0\\microsoft.aspnetcore.spaservices.extensions.6.0.0.nupkg.sha512",
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.build\\17.0.0\\microsoft.build.17.0.0.nupkg.sha512",
     "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\microsoft.build.framework\\17.0.0\\microsoft.build.framework.17.0.0.nupkg.sha512",

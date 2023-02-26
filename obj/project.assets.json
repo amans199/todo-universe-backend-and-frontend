@@ -112,6 +112,21 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll": {}
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/5.0.0": {
         "type": "package",
         "compile": {
@@ -4293,6 +4308,20 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll",
         "microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
         "microsoft.aspnetcore.razor.language.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.SpaServices.Extensions/6.0.0": {
+      "sha512": "IarNRmoHmw30gs4u6d/N1Cfxu+KAd8fBwMq+GRlweApiFXUvLOQB4fXj17+6VkpWYKRvGAW3nc6xQwMI0JH1KA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.spaservices.extensions/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll",
+        "microsoft.aspnetcore.spaservices.extensions.6.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.spaservices.extensions.nuspec"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/5.0.0": {
@@ -11622,6 +11651,7 @@
     "net6.0": [
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.10",
       "Microsoft.AspNetCore.Authorization >= 6.0.10",
+      "Microsoft.AspNetCore.SpaServices.Extensions >= 6.0.0",
       "Microsoft.EntityFrameworkCore >= 6.0.9",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.9",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.9",
@@ -11638,11 +11668,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\study-projects\\2022\\practice\\todo-universe\\TodoUniverse.Web.csproj",
+      "projectUniqueName": "C:\\study-projects\\2023\\todo-universe-app\\todo-universe\\TodoUniverse.Web.csproj",
       "projectName": "TodoUniverse.Web",
-      "projectPath": "C:\\study-projects\\2022\\practice\\todo-universe\\TodoUniverse.Web.csproj",
+      "projectPath": "C:\\study-projects\\2023\\todo-universe-app\\todo-universe\\TodoUniverse.Web.csproj",
       "packagesPath": "C:\\Users\\Ahmed Mansour\\.nuget\\packages\\",
-      "outputPath": "C:\\study-projects\\2022\\practice\\todo-universe\\obj\\",
+      "outputPath": "C:\\study-projects\\2023\\todo-universe-app\\todo-universe\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ahmed Mansour\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -11659,11 +11689,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\study-projects\\2022\\practice\\TodoUniverse.Library\\TodoUniverse.Library.csproj": {
-              "projectPath": "C:\\study-projects\\2022\\practice\\TodoUniverse.Library\\TodoUniverse.Library.csproj"
+            "C:\\study-projects\\2023\\todo-universe-app\\TodoUniverse.Library\\TodoUniverse.Library.csproj": {
+              "projectPath": "C:\\study-projects\\2023\\todo-universe-app\\TodoUniverse.Library\\TodoUniverse.Library.csproj"
             },
-            "C:\\study-projects\\2022\\practice\\TodoUniverse.Tests\\TodoUniverse.Tests.csproj": {
-              "projectPath": "C:\\study-projects\\2022\\practice\\TodoUniverse.Tests\\TodoUniverse.Tests.csproj"
+            "C:\\study-projects\\2023\\todo-universe-app\\TodoUniverse.Tests\\TodoUniverse.Tests.csproj": {
+              "projectPath": "C:\\study-projects\\2023\\todo-universe-app\\TodoUniverse.Tests\\TodoUniverse.Tests.csproj"
             }
           }
         }
@@ -11685,6 +11715,10 @@
           "Microsoft.AspNetCore.Authorization": {
             "target": "Package",
             "version": "[6.0.10, )"
+          },
+          "Microsoft.AspNetCore.SpaServices.Extensions": {
+            "target": "Package",
+            "version": "[6.0.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
@@ -11732,7 +11766,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

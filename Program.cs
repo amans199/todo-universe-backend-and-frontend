@@ -14,6 +14,7 @@ using todo_universe.Helpers;
 using todo_universe.Services;
 using todo_universe.Repository;
 using todo_universe.ActionFilters;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,10 @@ builder.Services.AddSingleton<JwtAuthenticationManager>();
 //register helper services
 builder.Services.AddScoped<AccountService>();
 //builder.Services.AddSingleton<UserHelpers>();
+builder.Services.AddSpaStaticFiles(configuration =>
+{
+    configuration.RootPath = "ClientApp/build";
+});
 
 
 
@@ -79,6 +84,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -87,5 +93,39 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+//app.UseCors(builder => {
+//    builder.WithOrigins("http://127.0.0.1:5173")
+//           .AllowAnyMethod()
+//           .AllowAnyHeader()
+//           .AllowCredentials();
+//});
+
+//app.Use(async (context, next) => {
+//    context.Response.Headers.Add("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+//    context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//    context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//    context.Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+
+//    if (context.Request.Method == "OPTIONS")
+//    {
+//        context.Response.StatusCode = 200;
+//    }
+//    else
+//    {
+//        await next();
+//    }
+//});
+
+
+//app.UseSpa(spa =>
+//{
+//    spa.Options.SourcePath = "ClientApp";
+
+//    if (app.Environment.IsDevelopment())
+//    {
+//        spa.UseReactDevelopmentServer(npmScript: "dev");
+//    }
+//});
+
 
 app.Run();
